@@ -1,59 +1,192 @@
-Here is a professional, high-impact README.md for your GitHub repository. It’s structured to impress recruiters by highlighting the NTCIR-19 competition and the technical complexity of local LLM deployment.
+# Retrieval-Augmented Generation System using Phi-3
 
-NTCIR-19 R2C2: Movie Knowledge Discovery RAG System
-This repository contains a specialized Retrieval-Augmented Generation (RAG) system developed for the NTCIR-19 R2C2 (Answering with Confidence) task. The system is designed to provide factual information from a Wikipedia movie corpus, providing not just answers, but also confidence scores and fact nuggets to ensure "model modesty" and prevent hallucinations.
+## Overview
 
-🚀 Key Features
-Local Inference: Runs a quantized Phi-3-mini model locally on a T4 GPU (no API costs).
+This project implements a **Retrieval-Augmented Generation (RAG)** pipeline for answering user queries using custom documents.
+It combines **vector search with a Large Language Model** to generate accurate and context-aware responses.
 
-Modesty-First Design: Implements a custom prompt-engineered scoring system to identify when data is missing from the context.
+The system preprocesses documents, splits them into chunks, converts them into embeddings, stores them in a vector database, and retrieves the most relevant chunks to answer user queries.
 
-Fact Extraction: Automatically breaks down complex movie plots into atomic "Nuggets" for better information density.
+---
 
-Scalable Retrieval: Built with LlamaIndex and BGE-small embeddings for high-precision semantic search.
+## Architecture
 
-Interactive UI: Deployed via Gradio for real-time testing and demonstration.
+```
+Documents
+   ↓
+Preprocessing
+   ↓
+Chunking
+   ↓
+Embedding Generation
+   ↓
+Vector Database
+   ↓
+User Query
+   ↓
+Query Embedding
+   ↓
+Similarity Search
+   ↓
+Relevant Chunks Retrieved
+   ↓
+Phi-3 Language Model
+   ↓
+Generated Response
+```
 
-🛠️ Tech Stack
-Framework: LlamaIndex
+---
 
-LLM: Microsoft Phi-3-mini (Quantized via BitsAndBytes)
+## Technologies Used
 
-Embeddings: BGE-small-en-v1.5
+* **Microsoft Phi-3** – Large Language Model for response generation
+* **LlamaIndex** – Framework for building RAG pipelines
+* **BGE-Small Encoder** – Text embedding model
+* **Vector Database** – Stores chunk embeddings for similarity search
+* **Python** – Implementation language
 
-Data Source: Wikipedia Movie Plots (via Hugging Face Datasets)
+---
 
-UI: Gradio
+## Key Components
 
-Environment: Python / Google Colab (T4 GPU)
+### 1. Data Preprocessing
 
-📁 Project Structure
-Plaintext
-├── movie_data/        # Processed .txt files of movie plots
-├── storage/           # Persistent Vector Database (Index)
-├── MY_TEAM_AC_1.txt   # Official NTCIR-formatted submission file
-└── app.ipynb          # Main application notebook
-📊 Evaluation (Modesty Test)
-The system was stress-tested with Out-of-Distribution (OOD) queries. When asked about movies not present in the local database (e.g., Deadpool & Wolverine), the system correctly:
+Raw documents are cleaned before processing to remove unwanted characters, HTML tags, and formatting issues.
 
-Set CONFIDENCE: 0.
+### 2. Chunking
 
-Refused to hallucinate facts.
+Large documents are split into smaller chunks to improve retrieval efficiency.
 
-Cited the specific movies it did have access to.
+Example:
 
-📝 Performance Highlights (Resume Ready)
-Quantization: Utilized 4-bit quantization to reduce VRAM footprint by ~60%, enabling high-performance LLM execution on consumer-grade GPUs.
+```
+Document:
+Artificial Intelligence is transforming industries...
 
-Grounding: Achieved zero hallucinations during "OOD" stress testing by enforcing strict context-only generation rules.
+Chunks:
+Chunk 1 → Artificial Intelligence is transforming industries
+Chunk 2 → AI helps automate complex tasks
+Chunk 3 → Machine learning improves decision making
+```
 
-Automation: Developed a automated pipeline to convert raw JSON/CSV corpus data into indexed vector formats.
+Chunking improves search accuracy and allows the model to process large datasets efficiently.
 
-How to Run
-Clone this repository.
+---
 
-Install requirements: pip install llama-index transformers bitsandbytes datasets gradio.
+### 3. Embedding Generation
 
-Run the notebook cells to build the index.
+Each chunk is converted into a **vector representation** using the **BGE-Small embedding model**.
 
-Launch the Gradio UI link generated at the end of the script.
+Example:
+
+```
+Text: "AI helps automate tasks"
+
+Vector:
+[0.231, -0.112, 0.876, ...]
+```
+
+These vectors capture the semantic meaning of the text.
+
+---
+
+### 4. Vector Database
+
+The system stores:
+
+* Chunk text
+* Corresponding embedding vectors
+
+This enables fast similarity search during query time.
+
+Example record:
+
+```
+{
+  chunk_id: 12,
+  text: "AI helps automate tasks",
+  embedding: [0.231, -0.112, 0.876 ...]
+}
+```
+
+---
+
+### 5. Query Processing
+
+When a user submits a query:
+
+1. The query is converted into an embedding vector.
+2. The vector database performs **similarity search**.
+3. The most relevant chunks are retrieved.
+
+---
+
+### 6. Response Generation
+
+The retrieved chunks are provided as context to the **Phi-3 language model**, which generates the final response.
+
+Example:
+
+```
+User Query:
+What is Artificial Intelligence?
+
+Retrieved Context:
+Artificial intelligence is the simulation of human intelligence...
+
+Generated Answer:
+Artificial Intelligence (AI) refers to the simulation of human intelligence
+in machines designed to think and learn like humans.
+```
+
+---
+
+## Advantages of RAG
+
+* Uses **custom knowledge sources**
+* Improves **accuracy and relevance**
+* Reduces **hallucination in LLM responses**
+* Enables **domain-specific question answering**
+
+---
+
+## Project Workflow
+
+1. Load and preprocess documents
+2. Split documents into chunks
+3. Generate embeddings for each chunk
+4. Store embeddings in a vector database
+5. Accept user queries
+6. Convert queries to embeddings
+7. Retrieve similar chunks
+8. Pass context to Phi-3 model
+9. Generate final response
+
+---
+
+## Applications
+
+* Document Question Answering
+* Knowledge Base Search
+* AI Chatbots
+* Enterprise Document Retrieval
+* Research Assistance Systems
+
+---
+
+## Future Improvements
+
+* Add advanced vector databases (FAISS / Pinecone)
+* Implement hybrid search (keyword + vector search)
+* Improve chunking strategies
+* Add streaming responses
+* Deploy as an API or web application
+
+---
+
+## Author
+
+Naval Kumar
+
+B.Tech Computer Science and Engineering
+Interested in AI Systems, Machine Learning, and Software Development.
