@@ -1,4 +1,4 @@
-# Retrieval-Augmented Generation System using Phi-3
+# Retrieval-Augmented Generation System using Phi-3, after that using Gimini API
 
 ## Overview
 
