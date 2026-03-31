@@ -1,4 +1,4 @@
-# These involves 2 learning Approaches:
+# These involves 3 learning Approaches:
 Approach 1:
 # Retrieval-Augmented Generation System using Phi-3
 
@@ -268,6 +268,16 @@ The system enforces **Strict Source Grounding** to prevent hallucinations. The o
 * **Hybrid Search**: Combine BM25 keyword matching with Vector similarity.
 * **Evaluation**: Implement RAGAS for automated faithfulness and relevancy scoring.
 
+---
+---
+#Approach 3: Agentic RAG with LangGraph (Self-Correction)
+* **In this advanced implementation, I moved beyond linear pipelines to a Stateful Graph Architecture.
+
+* **State Management: Using TypedDict to track the lifecycle of a query.
+
+* **Conditional Routing: The system evaluates the quality of Pinecone's retrieval. If the retrieved movie plots are deemed irrelevant by the Grader Agent, the graph triggers a recursive loop to re-attempt retrieval with an optimized query.
+
+Reliability: This prevents "Hallucination by Default," ensuring the LLM only answers when the retrieved evidence is high-quality.
 ---
 
 ## Author
