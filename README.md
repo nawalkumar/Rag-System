@@ -197,22 +197,25 @@ The system features **Compute Heterogeneity**: utilizing local GPU/CPU resources
 ---
 
 ## Architecture v2.0
-[1,500 Movie TXT Files]
-↓
-[RecursiveCharacterTextSplitter] (Chunk Size: 1000, Overlap: 100)
-↓
-[HuggingFace: all-mpnet-base-v2] (Local Embedding Generation)
-↓
-[Pinecone Vector DB] (768-D, Cosine Similarity)
-↓
-[User Query] → [Symmetric Embedding]
-↓
-[Vector Search] → [Top-K Context Retrieval]
-↓
-[Groq LPU] → [Llama-3.3-70B-Versatile]
-↓
-[Structured NTCIR-19 Response]
-
+1,500 Movie TXT Files
+   ↓
+Recursive Character Text Splitting
+   ↓
+Local Embedding Generation (all-mpnet-base-v2)
+   ↓
+Pinecone Vector Database (768-D)
+   ↓
+User Query
+   ↓
+Symmetric Query Embedding
+   ↓
+Cosine Similarity Search
+   ↓
+Top-K Relevant Plots Retrieved
+   ↓
+Groq LPU (Llama-3.3-70B Model)
+   ↓
+Structured NTCIR-19 Response
 ---
 
 ## Advanced Technologies Used
