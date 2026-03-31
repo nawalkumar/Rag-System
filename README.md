@@ -1,4 +1,6 @@
-# Retrieval-Augmented Generation System using Phi-3, after that using Gimini API
+# These involves 2 learning Approaches:
+Approach 1:
+# Retrieval-Augmented Generation System using Phi-3
 
 ## Overview
 
@@ -183,6 +185,9 @@ in machines designed to think and learn like humans.
 * Deploy as an API or web application
 
 ---
+
+Implimenting future Improvements:
+
 
 ## Author
 
