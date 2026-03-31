@@ -187,7 +187,83 @@ in machines designed to think and learn like humans.
 ---
 
 Implimenting future Improvements:
+# Approach 2: Production-Scale RAG with Pinecone & Groq (2026)
 
+## Overview
+This evolved approach transitions from local prototyping to a high-performance, cloud-native RAG system. It is designed to handle a corpus of **1,500+ unstructured movie documents** with sub-second retrieval and reasoning.
+
+The system features **Compute Heterogeneity**: utilizing local GPU/CPU resources for embedding generation and LPU-powered cloud infrastructure for ultra-fast inference.
+
+---
+
+## Architecture v2.0
+[1,500 Movie TXT Files]
+↓
+[RecursiveCharacterTextSplitter] (Chunk Size: 1000, Overlap: 100)
+↓
+[HuggingFace: all-mpnet-base-v2] (Local Embedding Generation)
+↓
+[Pinecone Vector DB] (768-D, Cosine Similarity)
+↓
+[User Query] → [Symmetric Embedding]
+↓
+[Vector Search] → [Top-K Context Retrieval]
+↓
+[Groq LPU] → [Llama-3.3-70B-Versatile]
+↓
+[Structured NTCIR-19 Response]
+
+---
+
+## Advanced Technologies Used
+
+* **Llama-3.3-70B-Versatile (via Groq)**: High-reasoning LLM running on LPU (Language Processing Units) for 500+ tokens/sec inference.
+* **Pinecone (Serverless)**: Cloud-native vector database for high-concurrency similarity search.
+* **HuggingFace `all-mpnet-base-v2`**: Local transformer model used to create 768-dimensional semantic embeddings.
+* **LangChain & LangChain-Community**: Orchestration framework for document loading and vector store integration.
+
+---
+
+## Key Engineering Solutions Implemented
+
+### 1. Symmetric Local Embeddings
+To avoid cloud latency and API costs during the ingestion of 1,500 files, we utilized a local **Sentence-Transformer**.
+* **Model**: `sentence-transformers/all-mpnet-base-v2`
+* **Benefit**: Ensures query vectors and document vectors exist in the same manifold without network-bound bottlenecks.
+
+### 2. Resilience & Quota Management
+The system is built with **Error Handling & Multi-Cloud Fallbacks**:
+* **Exponential Backoff**: Implemented retry logic to handle `429 Resource Exhausted` errors.
+* **Direct REST Integration**: Bypassed SDK versioning issues (404 errors) by interfacing directly with Google/Groq production endpoints.
+* **Secrets Management**: Integrated `getpass` and environment variables to prevent API key leakage (403 errors).
+
+### 3. NTCIR-19 Structured Grounding
+The system enforces **Strict Source Grounding** to prevent hallucinations. The output is structured with:
+* **Source Evidence**: Direct quotes from the Pinecone index.
+* **Confidence Scores**: Quantitative assessment of the retrieval match.
+* **Reasoning**: Complex thematic analysis (e.g., identifying "Hamartia" or tragic flaws).
+
+---
+
+## How to Run (Approach 2)
+
+1.  **Initialize Pinecone**: Create a 768-D index with `metric="cosine"`.
+2.  **Ingest Data**: Use the `DirectoryLoader` to process the `./movie_data_large` folder.
+3.  **Search & Generate**:
+    ```python
+    # Example Query
+    query = "Find a movie where a character's greatest strength becomes their undoing."
+    ```
+4.  **Inference**: The query is routed to Groq for sub-second analysis.
+
+---
+
+## Future Roadmap
+* **Metadata Filtering**: Filter searches by movie release decade or genre.
+* **Hybrid Search**: Combine BM25 keyword matching with Vector similarity.
+* **Evaluation**: Implement RAGAS for automated faithfulness and relevancy scoring.
+
+---
 
 ## Author
 
