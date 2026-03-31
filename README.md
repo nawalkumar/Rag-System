@@ -178,11 +178,11 @@ in machines designed to think and learn like humans.
 
 ## Future Improvements
 
-* Add advanced vector databases (FAISS / Pinecone)
-* Implement hybrid search (keyword + vector search)
-* Improve chunking strategies
-* Add streaming responses
-* Deploy as an API or web application
+* Add advanced vector databases (FAISS / Pinecone)- done
+* Implement hybrid search (keyword + vector search)- done
+* Improve chunking strategies- done
+* Add streaming responses- in last
+* Deploy as an API or web application- in last
 
 ---
 
@@ -264,13 +264,12 @@ The system enforces **Strict Source Grounding** to prevent hallucinations. The o
 ---
 
 ## Future Roadmap
-* **Metadata Filtering**: Filter searches by movie release decade or genre.
-* **Hybrid Search**: Combine BM25 keyword matching with Vector similarity.
+* **Metadata Filtering**: Filter searches by movie release decade or genre - continuing
 * **Evaluation**: Implement RAGAS for automated faithfulness and relevancy scoring.
 
 ---
 ---
-#Approach 3: Agentic RAG with LangGraph (Self-Correction)
+# Approach 3: Agentic RAG with LangGraph (Self-Correction)
 * **In this advanced implementation, I moved beyond linear pipelines to a Stateful Graph Architecture.
 
 * **State Management: Using TypedDict to track the lifecycle of a query.
@@ -279,6 +278,12 @@ The system enforces **Strict Source Grounding** to prevent hallucinations. The o
 
 Reliability: This prevents "Hallucination by Default," ensuring the LLM only answers when the retrieved evidence is high-quality.
 ---
+
+---
+ # Currently Working on:
+ * ** Metadat Filtering by Year
+ * **Ragas for evaluating results
+ * **Building ui && adding streaming Response Features
 
 ## Author
 
