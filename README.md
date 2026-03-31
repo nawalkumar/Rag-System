@@ -197,6 +197,7 @@ The system features **Compute Heterogeneity**: utilizing local GPU/CPU resources
 ---
 
 ## Architecture v2.0
+```
 1,500 Movie TXT Files
    ↓
 Recursive Character Text Splitting
@@ -216,6 +217,7 @@ Top-K Relevant Plots Retrieved
 Groq LPU (Llama-3.3-70B Model)
    ↓
 Structured NTCIR-19 Response
+```
 ---
 
 ## Advanced Technologies Used
