@@ -1,4 +1,4 @@
-* live Instances: https://c8ca35c5dc78744a77.gradio.live/
+* live Instances(only working when model is running in collab): https://c8ca35c5dc78744a77.gradio.live/
 # These involves 3 learning Approaches:
 Approach 1:
 # Retrieval-Augmented Generation System using Phi-3
