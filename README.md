@@ -1,3 +1,4 @@
+* live Instances(only working when model is running in collab): https://c8ca35c5dc78744a77.gradio.live/
 # These involves 3 learning Approaches:
 Approach 1:
 # Retrieval-Augmented Generation System using Phi-3
@@ -276,14 +277,15 @@ The system enforces **Strict Source Grounding** to prevent hallucinations. The o
 
 * **Conditional Routing: The system evaluates the quality of Pinecone's retrieval. If the retrieved movie plots are deemed irrelevant by the Grader Agent, the graph triggers a recursive loop to re-attempt retrieval with an optimized query.
 
+* **Implimented Gradio UI for better user Experience (*Build ui && adding streaming Response Features*): https://c8ca35c5dc78744a77.gradio.live/
+
 Reliability: This prevents "Hallucination by Default," ensuring the LLM only answers when the retrieved evidence is high-quality.
 ---
 
 ---
  # Currently Working on:
- * ** Metadat Filtering by Year
+ * **Implimenting HYbrid Search- BM25 for Better Keyword matching and vector search for sementic Matching
  * **Ragas for evaluating results
- * **Building ui && adding streaming Response Features
 
 ## Author
 
